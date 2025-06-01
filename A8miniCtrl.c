@@ -1,4 +1,4 @@
-#include "A8miniControl.h"
+#include "A8miniCtrl.h"
 
 int main(int argc, char *argv[]){
 
