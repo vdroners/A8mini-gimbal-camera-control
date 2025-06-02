@@ -29,17 +29,23 @@ sudo apt update && sudo apt install -y \
     python3-pip
 
 pip3 install psutil python-dotenv
-2. Compile Gimbal Control Tool
-bash
-Copy
-Edit
-gcc -o A8miniControl A8miniControl.c
-Ensure A8miniControl is in the same directory as cam_ctrl.py.
+```
 
-3. Configure .env File
-env
-Copy
-Edit
+---
+
+### 2. Compile Gimbal Control Tool
+
+```bash
+gcc -o A8miniControl A8miniControl.c
+```
+
+Ensure `A8miniControl` is in the same directory as `cam_ctrl.py`.
+
+---
+
+### 3. Configure `.env` File
+
+```env
 # Email Settings
 EMAIL_SENDER=you@example.com
 EMAIL_PASSWORD=yourpassword
@@ -62,74 +68,95 @@ AIR_DATA_TX_IP=192.168.144.11
 GROUND_STATION_IP=192.168.144.12
 SIYI_IP=192.168.144.25
 SIYI_AI_IP=192.168.144.60
-🎮 Camera Control CLI (cam_ctrl.py)
+```
+
+---
+
+## 🎮 Camera Control CLI (`cam_ctrl.py`)
+
 Run the Python CLI:
 
-bash
-Copy
-Edit
+```bash
 python3 cam_ctrl.py
-Available Keys (Numpad Layout)
-Key	Action
-0	Auto Centering
-1	Follow Mode
-2	Rotate Down
-3	FPV Mode
-4	Rotate Left
-5	Stop Rotation
-6	Rotate Right
-7	Record Video
-8	Rotate Up
-9	Take Photo
-v	Restart Video Feed
-q	Quit
+```
 
-🔄 Restart Stream
+### Available Keys (Numpad Layout)
+
+| Key | Action            |
+|-----|-------------------|
+| `0` | Auto Centering    |
+| `1` | Follow Mode       |
+| `2` | Rotate Down       |
+| `3` | FPV Mode          |
+| `4` | Rotate Left       |
+| `5` | Stop Rotation     |
+| `6` | Rotate Right      |
+| `7` | Record Video      |
+| `8` | Rotate Up         |
+| `9` | Take Photo        |
+| `v` | Restart Video Feed|
+| `q` | Quit              |
+
+### 🔄 Restart Stream
 Internally triggers:
 
-bash
-Copy
-Edit
+```bash
 ./restartVideo.sh
+```
+
 Ensure this script has executable permissions:
 
-bash
-Copy
-Edit
+```bash
 chmod +x restartVideo.sh
-📨 System Status Report (report.py)
+```
+
+---
+
+## 📨 System Status Report (`report.py`)
+
 This tool is designed to be run on boot and provides:
 
-Ping check of key drone modules
-
-RTSP stream integrity test
-
-IP/interface diagnostics
-
-Speedtest and latency
-
-Sends a complete system report via email
+- Ping check of key drone modules
+- RTSP stream integrity test
+- IP/interface diagnostics
+- Speedtest and latency
+- Sends a complete system report via email
 
 Example:
 
-bash
-Copy
-Edit
+```bash
 python3 report.py
-Can be scheduled with cron, systemd, or a startup script.
+```
 
-🔐 Security
-Store .env securely. Do not commit credentials to public repositories. Use .gitignore:
+Can be scheduled with `cron`, `systemd`, or a startup script.
 
-bash
-Copy
-Edit
+---
+
+## 🔐 Security
+
+Store `.env` securely. Do not commit credentials to public repositories. Use `.gitignore`:
+
+```
 .env
 __pycache__/
-🛠 Future Enhancements
-Command macros for scan sequences
+```
 
-Autonomous gimbal sweep and loop modes
+---
+
+## 🛠 Future Enhancements
+
+- Command macros for scan sequences
+- Autonomous gimbal sweep and loop modes
+- Optional web dashboard UI (Flask)
+
+---
+
+## 📬 Questions?
+
+Contact the dev team or open a GitHub issue with logs from `report.py`.
+
+---
+
 
 Optional web dashboard UI (Flask)
 
