@@ -15,9 +15,14 @@ KEYMAP = {
     "9": (12, "Take Pictures")
 }
 
-# Path to shell scripts
-RECORD_SCRIPT = "./recordLocal.sh"
-RESTART_GST_SCRIPT = "./restartVideo.sh"
+RECORD_CMD = [
+    "ffmpeg",
+    "-rtsp_transport", "tcp",
+    "-i", "rtsp://192.168.144.25:8554/main.264",
+    "-c", "copy",
+    "-f", "mp4",
+    "output.mp4"
+]
 
 recording_proc = None
 
@@ -39,13 +44,14 @@ def toggle_recording():
         recording_proc = None
     else:
         print("🟩 Starting onboard recording...")
-        recording_proc = subprocess.Popen([RECORD_SCRIPT])
+        recording_proc = subprocess.Popen(RECORD_CMD)
 
 def restart_gstreamer():
-    print("🔄 Rebooting GStreamer via restartVideo.sh...")
+    print("🔄 Rebooting GStreamer pipeline...")
     try:
-        subprocess.run([RESTART_GST_SCRIPT], check=True)
-        print("✅ GStreamer rebooted.")
+        subprocess.run(["sudo", "systemctl", "stop", "usbcamera"], check=True)
+        subprocess.run(["sudo", "systemctl", "start", "usbcamera"], check=True)
+        print("✅ GStreamer restarted.")
     except subprocess.CalledProcessError:
         print("❌ Failed to restart GStreamer.")
 
@@ -70,9 +76,11 @@ def main():
             cmd_idx, label = KEYMAP[key]
             print(f"→ Executing: [{label}] → C Command Index [{cmd_idx}]")
             try:
-                subprocess.run(["./A8miniControl", str(cmd_idx)], check=True)
+                subprocess.run(["./A8miniCtrl", str(cmd_idx)], check=True)
             except subprocess.CalledProcessError:
-                print("❌ Error running A8miniControl.")
+                print("❌ Error running A8miniCtrl.")
+            except FileNotFoundError:
+                print("❌ 'A8miniCtrl' not found. Ensure it is compiled and in this directory.")
         else:
             print("❗ Invalid input. Use keys 0–9, +, -, or q.")
 
