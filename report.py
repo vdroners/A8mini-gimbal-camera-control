@@ -32,6 +32,7 @@ AIR_DATA_TX_IP = os.getenv("AIR_DATA_TX_IP")
 GROUND_STATION_IP = os.getenv("GROUND_STATION_IP")
 SIYI_IP = os.getenv("SIYI_IP")
 SIYI_AI_IP = os.getenv("SIYI_AI_IP")
+NOSE_CAM_IP = os.getenv("NOSE_CAM_IP")
 
 def get_temp():
     try:
@@ -182,7 +183,8 @@ def build_report():
 <b>Air Data TX:</b> {AIR_DATA_TX_IP} {ping_host(AIR_DATA_TX_IP)}<br>
 <b>Ground Station:</b> {GROUND_STATION_IP} {ping_host(GROUND_STATION_IP)}<br>
 <b>SIYI A8 Mini:</b> {SIYI_IP} {ping_host(SIYI_IP)}<br>
-<b>SIYI AI Module:</b> {SIYI_AI_IP} {ping_host(SIYI_AI_IP)}<br><br>
+<b>SIYI AI Module:</b> {SIYI_AI_IP} {ping_host(SIYI_AI_IP)}<br>
+<b>Nose Camera:</b> {NOSE_CAM_IP} {ping_host(NOSE_CAM_IP)}<br><br>
 
 <h2>🔐 SSH Sessions</h2>
 {get_active_ssh()}<br><br>
